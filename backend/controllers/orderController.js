@@ -19,7 +19,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('No order items')
     } else {
-        const oder = new Order({
+        const order = new Order({
             orderItems, 
             user: req.user._id,
             shippingAddress, 
@@ -30,7 +30,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
             totalPrice 
         })
 
-        const createOrder = await orderItems.save()
+        const createOrder = await order.save()
 
         res.status(201).json(createOrder)
     }
