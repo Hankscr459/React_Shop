@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import Loading from '../components/Loading'
 import Message from '../components/Message'
 import { Link } from 'react-router-dom'
@@ -20,7 +20,7 @@ const OrderScreen = ({match}) => {
         }
     
         order.itemsPrice = addDecimals(
-            order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+            order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2)
         )
     }
 
@@ -32,7 +32,7 @@ const OrderScreen = ({match}) => {
         if(!order || order._id !== orderId) {
             dispatch(getOrderDetails(orderId))
         }
-    }, [order, orderId]) 
+    }, [ dispatch, order, orderId]) 
 
 
     return loading ? <Loading /> : error ? <Message variant='danger'>{error}</Message>
@@ -88,7 +88,7 @@ const OrderScreen = ({match}) => {
                                                             </Link>
                                                         </Col>
                                                         <Col md={4}>
-                                                            {item.qty} x ${item.price} = ${item.qty * item.price}
+                                                            {item.qty} x ${item.price} = ${(item.qty * item.price).toFixed(2)}
                                                         </Col>
                                                     </Row>
                                                 </ListGroup.Item>
