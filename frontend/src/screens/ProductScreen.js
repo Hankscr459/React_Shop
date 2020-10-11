@@ -17,7 +17,7 @@ const ProductScreen = ({ history, match }) => {
 
     useEffect(() => {
         dispatch(listProductsDetails(match.params.id))
-    }, [dispatch, match])
+    }, [dispatch, match, qty])
 
     const addToCartHandler = () => {
         history.push(`/cart/${match.params.id}?qty=${qty}`)
@@ -80,7 +80,7 @@ const ProductScreen = ({ history, match }) => {
                                             <Col>
                                                 <Form.Control 
                                                     as='select' 
-                                                    value={qty} 
+                                                    value={qty || 1} 
                                                     onChange={(e) => 
                                                     setQty(e.target.value)}
                                                 >
