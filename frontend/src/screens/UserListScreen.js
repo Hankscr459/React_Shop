@@ -6,20 +6,28 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Button, Table } from 'react-bootstrap'
 import { listUsers } from '../actions/userActions'
 
-const UserListScreen = () => {
+const UserListScreen = ({history}) => {
 
     const dispatch = useDispatch()
 
     const userList = useSelector(state => state.userList)
     const { loading, error, users } = userList
 
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
+
     const deleteHandler = () => {
         console.log('deleteHandler')
     }
 
     useEffect(() => {
-        dispatch(listUsers())
-    }, [dispatch])
+        if(userInfo && userInfo.isAdmin) {
+            dispatch(listUsers())
+        } else {
+            history.push('/login')
+        }
+        
+    }, [dispatch, history])
 
     return (
         <>
@@ -27,7 +35,7 @@ const UserListScreen = () => {
             {loading ? <Loading /> : error ? <Message variant='danger'>{error}</Message>
             : (
                 <Table striped bordered hover responsive className='table-sm'>
-                    <thread>
+                    <thead>
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
@@ -35,12 +43,12 @@ const UserListScreen = () => {
                             <th>Admin</th>
                             <th></th>
                         </tr>
-                    </thread>
+                    </thead>
                     <tbody>
                         {users.map(user => (
                             <tr key={user._id}>
                                 <td>{user._id}</td>
-                                <td>{user._name}</td>
+                                <td>{user.name}</td>
                                 <td><a href={`mailto:${user.email}`}>{user.email}</a></td>
                                 <td>
                                     {user.isAdmin ? (<i className='fas fa-check' style={{color: 'green'}}></i>) : (
