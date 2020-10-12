@@ -4,7 +4,7 @@ import Message from '../components/Message'
 import Loading from '../components/Loading'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Button, Table } from 'react-bootstrap'
-import { listUsers } from '../actions/userActions'
+import { listUsers, deleteUser } from '../actions/userActions'
 
 const UserListScreen = ({history}) => {
 
@@ -16,8 +16,13 @@ const UserListScreen = ({history}) => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    const deleteHandler = () => {
-        console.log('deleteHandler')
+    const userDelete = useSelector(state => state.userDelete)
+    const { success: sucessDelete } = userDelete
+
+    const deleteHandler = (id) => {
+        if (window.confirm('Are you sure')) {
+            dispatch(deleteUser(id))
+        }
     }
 
     useEffect(() => {
@@ -27,7 +32,7 @@ const UserListScreen = ({history}) => {
             history.push('/login')
         }
         
-    }, [dispatch, history])
+    }, [dispatch, history, sucessDelete])
 
     return (
         <>
