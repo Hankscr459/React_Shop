@@ -80,7 +80,7 @@ const ProductScreen = ({ history, match }) => {
                                             <Col>
                                                 <Form.Control 
                                                     as='select' 
-                                                    value={qty || 1} 
+                                                    value={qty} 
                                                     onChange={(e) => 
                                                     setQty(e.target.value)}
                                                 >
