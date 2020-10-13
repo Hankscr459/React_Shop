@@ -5,7 +5,7 @@ import Message from "../components/Message"
 import Loading from "../components/Loading"
 import { LinkContainer } from 'react-router-bootstrap'
 import { getUserDetails, updateUserProfile } from "../actions/userActions"
-import { listOrders } from '../actions/orderActions'
+import { listMyOrders } from '../actions/orderActions'
 
 const ProfileScreen = ({ location, history }) => {
 	const [name, setName] = useState('')
@@ -35,7 +35,7 @@ const ProfileScreen = ({ location, history }) => {
 		} else {
 			if (!user.name) {
 				dispatch(getUserDetails("profile"))
-				dispatch(listOrders())
+				dispatch(listMyOrders())
 			} else {
 				setName(user.name)
 				setEmail(user.email)
